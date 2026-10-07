@@ -1,11 +1,12 @@
+import type { ReactNode } from "react";
 import { MapPin } from "lucide-react";
-import { about, contact, site } from "@/content";
+import { about, contact, hero, nav, products, site } from "@/content";
 import { Logo } from "./logo";
 
 export function About() {
   return (
     <section id="about" aria-labelledby="about-heading" className="border-t border-line">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 pb-16 pt-24 sm:px-8 sm:pt-32 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
         <div>
           <h2
             id="about-heading"
@@ -31,6 +32,18 @@ export function About() {
             <p key={p}>{p}</p>
           ))}
         </div>
+      </div>
+
+      <div className="mx-auto max-w-6xl px-5 pb-24 sm:px-8 sm:pb-32">
+        <h3 className="text-lg font-semibold tracking-tight text-fg">{about.principlesTitle}</h3>
+        <ul className="mt-6 grid gap-4 md:grid-cols-3">
+          {about.principles.map((item) => (
+            <li key={item.title} className="glass rounded-[28px] p-6 sm:p-7">
+              <h4 className="text-base font-semibold tracking-tight text-fg">{item.title}</h4>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted">{item.body}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
@@ -77,13 +90,55 @@ export function Footer() {
   // Static export: the year is set at build time, so redeploy once a year.
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-line">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-10 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8">
-        <Logo />
-        <p>
+    <footer className="border-t border-line text-sm">
+      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 sm:grid-cols-2 sm:px-8 lg:grid-cols-[1.6fr_1fr_1fr_1fr]">
+        <div>
+          <Logo />
+          <p className="mt-4 max-w-xs leading-relaxed text-muted">{hero.headline}.</p>
+        </div>
+        <FooterColumn title="Products">
+          {products.map((p) => (
+            <li key={p.id}>
+              <a href="#products" className="text-muted transition-colors hover:text-fg">
+                {p.name}
+              </a>
+            </li>
+          ))}
+        </FooterColumn>
+        <FooterColumn title="Company">
+          {nav
+            .filter((item) => item.href !== "#products")
+            .map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className="text-muted transition-colors hover:text-fg">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+        </FooterColumn>
+        <FooterColumn title="Contact">
+          <li>
+            <a href={`mailto:${contact.email}`} className="text-muted transition-colors hover:text-fg">
+              {contact.email}
+            </a>
+          </li>
+          <li className="text-muted">{contact.location}</li>
+        </FooterColumn>
+      </div>
+      <div className="border-t border-line">
+        <p className="mx-auto max-w-6xl px-5 py-6 text-muted sm:px-8">
           © {year} {site.name}. All rights reserved.
         </p>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <nav aria-label={title}>
+      <h2 className="font-medium text-fg">{title}</h2>
+      <ul className="mt-4 space-y-2.5">{children}</ul>
+    </nav>
   );
 }

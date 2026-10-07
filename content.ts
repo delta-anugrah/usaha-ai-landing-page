@@ -43,6 +43,7 @@ export const site = {
 
 export const nav = [
   { label: "Products", href: "#products" },
+  { label: "Palm oil", href: "#palm-oil" },
   { label: "How we use AI", href: "#ai" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
@@ -131,6 +132,46 @@ export const products: Product[] = [
   },
 ];
 
+export type Step = {
+  title: string;
+  body: string;
+  /** Product that handles this step. */
+  product: string;
+};
+
+export const palmOil = {
+  title: "Built for palm oil mills",
+  intro:
+    "AutoGrade and AutoERP work together on a mill's fruit intake, from the moment a truck arrives to the numbers on the dashboard.",
+  steps: [
+    {
+      title: "Weigh the truck",
+      body: "Each truck visit gets a digital weighbridge ticket.",
+      product: "AutoERP",
+    },
+    {
+      title: "Grade the fruit",
+      body: "Computer vision checks fruit quality automatically as it is received.",
+      product: "AutoGrade",
+    },
+    {
+      title: "Apply deductions",
+      body: "Quality deductions are applied to the ticket automatically.",
+      product: "AutoERP",
+    },
+    {
+      title: "Record purchase and stock",
+      body: "Purchase and stock records are created from each truck visit.",
+      product: "AutoERP",
+    },
+    {
+      title: "Read the dashboard",
+      body: "OER/KER, intake by source, and ISPO/RSPO certification in one mill dashboard.",
+      product: "AutoERP",
+    },
+  ] satisfies Step[],
+};
+
 export const capabilitiesSection = {
   title: "How we use AI",
   intro: "Three kinds of AI sit underneath everything we ship.",
@@ -166,6 +207,21 @@ export const about = {
     "Usaha AI is an AI startup from Indonesia. We build practical AI products for businesses and industry, aimed at everyday work rather than demos.",
     "Our products cover sales outreach and palm oil mill operations. We also build our own platforms for vision AI and generative AI, so we can train, run, and improve the models behind them.",
   ],
+  principlesTitle: "How we work",
+  principles: [
+    {
+      title: "Start from the job",
+      body: "We begin with work people already do every day, like grading fruit or finding sales leads, and build the AI around it.",
+    },
+    {
+      title: "Run it ourselves",
+      body: "Our vision models are trained and served on our own servers, and our generative AI studio is private to us.",
+    },
+    {
+      title: "Build on proven tools",
+      body: "Where a solid foundation exists, we use it: ERPNext for AutoERP, large language models such as Claude for language work. Our effort goes into the parts specific to each industry.",
+    },
+  ],
   // TODO: set the year Usaha AI was founded, e.g. 2024. Hidden while null.
   foundedYear: null as number | null,
   location: "Indonesia", // TODO: add a city if you want, e.g. "Jakarta, Indonesia"
@@ -174,7 +230,6 @@ export const about = {
 export const contact = {
   title: "Contact",
   intro: "Questions, partnerships, or a product demo: send us an email.",
-  // TODO: confirm this inbox exists before going live.
-  email: "hello@usaha.ai",
+  email: "support@usaha.ai",
   location: about.location,
 };
