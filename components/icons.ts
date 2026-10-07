@@ -3,7 +3,6 @@ import {
   Clapperboard,
   ImageIcon,
   MessageSquareText,
-  MessagesSquare,
   Radar,
   Scale,
   ScanEye,
@@ -14,7 +13,6 @@ import type { CapabilityId } from "@/content";
 
 /** Icon per product id. Unknown ids fall back to Aperture. */
 export const productIcons: Record<string, LucideIcon> = {
-  hillow: MessagesSquare,
   satellyte: Radar,
   autograde: ScanEye,
   autoerp: Scale,

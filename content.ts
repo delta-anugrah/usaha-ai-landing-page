@@ -38,7 +38,7 @@ export const site = {
   url: "https://usaha.ai",
   title: "Usaha AI: AI products built for real-world industry",
   description:
-    "Usaha AI is an Indonesian startup building practical AI products for businesses and industry: customer service agents, sales outreach, computer vision for palm oil mills, and generative AI.",
+    "Usaha AI is an Indonesian startup building practical AI products for businesses and industry: sales outreach, computer vision and ERP for palm oil mills, and generative AI.",
 };
 
 export const nav = [
@@ -51,7 +51,7 @@ export const nav = [
 export const hero = {
   headline: "AI products built for real-world industry",
   subheadline:
-    "Usaha AI builds practical AI products for businesses and industry in Indonesia, from customer service to palm oil mills.",
+    "Usaha AI builds practical AI products for businesses and industry in Indonesia, from sales outreach to palm oil mills.",
   primaryCta: { label: "Explore products", href: "#products" },
   secondaryCta: { label: "Contact us", href: "#contact" },
   diagramCaption: "How our products connect to the AI we build with",
@@ -60,19 +60,13 @@ export const hero = {
 export const productsSection = {
   title: "Products",
   intro:
-    "Four products for customers, and two internal platforms we use to build and run them.",
+    "Three products for customers, and two internal platforms we use to build and run them.",
+  internalTitle: "Internal platforms",
+  internalIntro:
+    "Platforms we built for our own use: one to train and run vision AI, one to generate images and video.",
 };
 
 export const products: Product[] = [
-  {
-    id: "hillow",
-    name: "Hillow",
-    category: "AI customer service",
-    summary:
-      "A multi-tenant customer service platform. AI agents help businesses reply to their customers across channels.",
-    capabilities: ["language"],
-    // TODO: add the public URL if Hillow has one, e.g. url: "https://..."
-  },
   {
     id: "satellyte",
     name: "Satellyte",
@@ -146,10 +140,11 @@ export const capabilities: Capability[] = [
   {
     id: "language",
     title: "Language AI",
-    // TODO: name the products that use Claude, e.g. "Hillow's agents run on
-    // Claude." Only Hillow is linked below until that is confirmed.
+    // TODO: name the products that use Claude. No product is linked to
+    // Language AI yet, so this area is hidden from the hero diagram and has no
+    // "Used in" line. Add "language" to a product's capabilities to link it.
     description:
-      "We use large language models such as Claude to power AI agents and automate text work like answering customer messages.",
+      "We use large language models such as Claude to power AI agents and automate text work.",
   },
   {
     id: "vision",
@@ -169,7 +164,7 @@ export const about = {
   title: "About",
   paragraphs: [
     "Usaha AI is an AI startup from Indonesia. We build practical AI products for businesses and industry, aimed at everyday work rather than demos.",
-    "Our products cover customer service, sales outreach, and palm oil mill operations. We also build our own platforms for vision AI and generative AI, so we can train, run, and improve the models behind them.",
+    "Our products cover sales outreach and palm oil mill operations. We also build our own platforms for vision AI and generative AI, so we can train, run, and improve the models behind them.",
   ],
   // TODO: set the year Usaha AI was founded, e.g. 2024. Hidden while null.
   foundedYear: null as number | null,

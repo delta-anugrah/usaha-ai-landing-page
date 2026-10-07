@@ -6,7 +6,7 @@ import { capabilities, products } from "@/content";
 // Compact viewBox with large labels, so text stays readable when the
 // diagram shrinks to phone width.
 const W = 520;
-const H = 420;
+const ROW = 92;
 const CAP = { x: 2, w: 176, h: 46 };
 const PROD = { x: 352, w: 144, h: 42 };
 
@@ -25,9 +25,13 @@ export function ProductGraph({ caption }: { caption: string }) {
   const reduce = useReducedMotion();
 
   const shown = products.filter((p) => p.capabilities.length > 0 || p.worksWith);
-  const capY = spread(capabilities.length, 80, H - 80);
-  const prodY = spread(shown.length, 44, H - 44);
-  const capCenter = new Map(capabilities.map((c, i) => [c.id, capY[i]]));
+  // Only AI areas that at least one product uses, so the diagram never shows
+  // an unconnected node.
+  const used = capabilities.filter((c) => shown.some((p) => p.capabilities.includes(c.id)));
+  const H = Math.max(shown.length, used.length) * ROW + 24;
+  const capY = spread(used.length, H * 0.22, H * 0.78);
+  const prodY = spread(shown.length, 34, H - 34);
+  const capCenter = new Map(used.map((c, i) => [c.id, capY[i]]));
   const prodCenter = new Map(shown.map((p, i) => [p.id, prodY[i]]));
 
   const edges = shown.flatMap((p) =>
@@ -85,6 +89,20 @@ export function ProductGraph({ caption }: { caption: string }) {
               <stop offset="0" stopColor="var(--accent)" stopOpacity="0.7" />
               <stop offset="1" stopColor="var(--accent-2)" stopOpacity="0.35" />
             </linearGradient>
+            {/* Glass nodes: translucent fill with a light rim that fades downward. */}
+            <linearGradient id="glass-fill" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stopColor="#fff" stopOpacity="0.12" />
+              <stop offset="1" stopColor="#fff" stopOpacity="0.03" />
+            </linearGradient>
+            <linearGradient id="glass-rim" x1="0" x2="0.4" y1="0" y2="1">
+              <stop offset="0" stopColor="#fff" stopOpacity="0.55" />
+              <stop offset="0.5" stopColor="#fff" stopOpacity="0.1" />
+              <stop offset="1" stopColor="#fff" stopOpacity="0.2" />
+            </linearGradient>
+            <linearGradient id="glass-tint" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stopColor="var(--accent)" stopOpacity="0.22" />
+              <stop offset="1" stopColor="var(--accent)" stopOpacity="0.05" />
+            </linearGradient>
           </defs>
 
           {edges.map((e, i) => (
@@ -130,7 +148,7 @@ export function ProductGraph({ caption }: { caption: string }) {
             />
           ))}
 
-          {capabilities.map((c, i) => (
+          {used.map((c, i) => (
             <motion.g
               key={c.id}
               initial={{ opacity: reduce ? 1 : 0 }}
@@ -142,14 +160,13 @@ export function ProductGraph({ caption }: { caption: string }) {
                 y={capY[i] - CAP.h / 2}
                 width={CAP.w}
                 height={CAP.h}
-                rx="12"
-                fill="var(--surface)"
-                stroke="var(--accent)"
-                strokeOpacity="0.45"
+                rx={CAP.h / 2}
+                fill="url(#glass-tint)"
+                stroke="url(#glass-rim)"
               />
-              <circle cx={CAP.x + 20} cy={capY[i]} r="3.5" fill="var(--accent)" />
+              <circle cx={CAP.x + 22} cy={capY[i]} r="3.5" fill="var(--accent)" />
               <text
-                x={CAP.x + 36}
+                x={CAP.x + 38}
                 y={capY[i]}
                 dominantBaseline="central"
                 fill="var(--fg)"
@@ -173,12 +190,12 @@ export function ProductGraph({ caption }: { caption: string }) {
                 y={prodY[i] - PROD.h / 2}
                 width={PROD.w}
                 height={PROD.h}
-                rx="10"
-                fill="var(--bg)"
-                stroke="var(--line-strong)"
+                rx={PROD.h / 2}
+                fill="url(#glass-fill)"
+                stroke="url(#glass-rim)"
               />
               <text
-                x={PROD.x + 15}
+                x={PROD.x + 18}
                 y={prodY[i]}
                 dominantBaseline="central"
                 fill="var(--fg)"
