@@ -28,11 +28,14 @@ npx serve out      # preview the exported site
 | `content.ts` | Every piece of text on the site, plus the product list |
 | `app/layout.tsx` | SEO metadata (title, description, Open Graph, Twitter card) |
 | `app/og.png/route.tsx` | Generates the social preview image `/og.png` at build time |
-| `app/icon.svg` | Favicon |
-| `app/globals.css` | Colors and background effects |
+| `public/logo.png` | Brand mark used in the navbar, footer, and `/og.png` |
+| `app/icon.png`, `app/apple-icon.png` | Favicon and iOS home-screen icon, made from the same logo |
+| `app/globals.css` | Colors, background light, and the glass styles (`.glass`, `.glass-strong`, `.glass-tint`) |
 | `components/` | Navbar, hero diagram, and page sections |
 
-The hero diagram and the "Used in" lines are built from `content.ts`: a product appears in the diagram when it has at least one entry in `capabilities` (or a `worksWith` link).
+The hero diagram and the "Used in" lines are built from `content.ts`: a product appears in the diagram when it has at least one entry in `capabilities` (or a `worksWith` link), and an AI area appears only when at least one product uses it. Products with `internal: true` are listed under "Internal platforms".
+
+To change the logo, replace `public/logo.png` (trimmed, transparent background) and regenerate `app/icon.png` and `app/apple-icon.png` from it.
 
 ## Deploy to Vercel
 

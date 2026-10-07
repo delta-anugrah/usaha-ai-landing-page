@@ -5,19 +5,21 @@ Summary of the work and the decisions made while building the site without being
 ## What was built
 
 - Next.js 16 (App Router) + TypeScript + Tailwind CSS 4, static export to `out/`.
-- One page: navbar, hero, products (6 cards), how we use AI, about, contact, footer.
+- One page: navbar, hero, products (3 products plus 2 internal platforms), how we use AI, about, contact, footer.
 - Framer Motion is used only for the hero diagram (lines draw in, nodes fade in). It loads lazily and respects "reduce motion" settings.
 - SEO: title, meta description, canonical URL, Open Graph and Twitter card, generated `/og.png` (1200×630), SVG favicon.
 - Accessibility: skip link, visible keyboard focus, labelled sections, mobile menu with `aria-expanded` and Escape to close, a text description of the hero diagram for screen readers.
-- Checks: `npm run build` and `npm run lint` pass. Lighthouse on the local build (served with gzip, like Vercel): Performance 97, Accessibility 100, Best Practices 100, SEO 100.
+- Checks: `npm run build` and `npm run lint` pass. Lighthouse on the local build (served with gzip, like Vercel): Performance 98, Accessibility 100, Best Practices 100, SEO 100.
 
 ## Design decisions
 
-- **Accent color:** teal to sky blue (`#3ddbc0` → `#45b8f5`), used only for the primary button, small icons, and the hero diagram. Picked teal over blue-purple because blue-purple is what most AI sites use.
+- **Logo:** the brand mark from the owner (`usaha-ai.png`, blue `#0072DC`), trimmed into `public/logo.png`, plus `app/icon.png` (favicon) and `app/apple-icon.png` (white background, because iOS does not show transparency).
+- **Accent color:** light brand blue to cyan (`#4aa3ff` → `#55d0f0`), derived from the logo blue so the page and the mark match. The logo blue itself is too dark for text on black, so a lighter tint is used for text and icons.
+- **Liquid glass style (Apple-like):** navbar is a floating glass pill, cards and panels are frosted glass with a light rim on the top-left edge, the primary button is tinted blue glass. A fixed layer of soft blue and indigo light sits behind the page so the glass has something to blur. Browsers without `backdrop-filter` get a solid dark panel instead.
 - **Font:** Geist (via `next/font`, self-hosted at build time, no request to Google at runtime).
-- **Hero visual:** instead of a stock illustration, a diagram showing which AI area each product uses (Language AI → Hillow, Computer vision → AutoGrade and Usaha Vision, Generative AI → Usaha GenAI, AutoERP linked to AutoGrade). It is built from `content.ts`, so it cannot show a link that the content does not claim.
+- **Hero visual:** instead of a stock illustration, a diagram showing which AI area each product uses (Computer vision → AutoGrade and Usaha Vision, Generative AI → Usaha GenAI, AutoERP linked to AutoGrade). It is built from `content.ts`, so it cannot show a link that the content does not claim. AI areas with no product are left out of the diagram.
 - **Headline:** "AI products built for real-world industry" (the direction from the brief, unchanged).
-- **Cards:** thin border, rounded corners, small lift and teal glow on hover. Each card shows the AI area it uses as a tag. "Internal platform" badge on Usaha Vision and Usaha GenAI.
+- **Cards:** glass, rounded corners, small lift on hover. Each card shows the AI area it uses as a tag. Usaha Vision and Usaha GenAI sit in their own "Internal platforms" row and keep the "Internal platform" badge.
 - **How we use AI:** three columns in one bordered panel (not cards, so it reads differently from the product grid). Each column lists the products that use it.
 - **Contact:** the email address is the large element of the section, as a `mailto:` link. No contact form (static site, and a form would need a backend).
 - **Section entrance animations:** left out on purpose. Only the hero moves, which keeps the page calm and fast.
@@ -25,7 +27,8 @@ Summary of the work and the decisions made while building the site without being
 ## Content decisions
 
 - **Claude is named** in the Language AI description ("large language models such as Claude"), because the brief asks for it and the site is for the Claude for Startups application. No other model names appear.
-- **Which products use Claude:** not stated yet. Only Hillow is linked to Language AI, because its description (AI agents replying to customers) clearly is language AI. TODO in `content.ts`.
+- **Hillow removed** at the owner's request (2026-10-07). Copy that mentioned customer service was updated to match.
+- **Which products use Claude:** not stated yet. After Hillow was removed, no product is linked to Language AI, so it does not appear in the hero diagram and its column has no "Used in" line. The Language AI column still names Claude. TODO in `content.ts`.
 - **Satellyte** is not tagged as using AI, because the brief does not say it does. It shows a "Sales automation" tag and is left out of the hero diagram. If it uses an LLM, add `capabilities: ["language"]` and it will appear in the diagram and the Language AI column automatically.
 - **AutoERP** is tagged "Mill operations" (not an AI tag) and says "built on ERPNext". It shows "Works with AutoGrade".
 - **Usaha GenAI** lists text-to-image, image editing with reference images, and short image-to-video clips. Text-to-video is not mentioned.
