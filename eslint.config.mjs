@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local tool state, not part of the site.
+    ".remember/**",
+    ".playwright-mcp/**",
   ]),
 ]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { LazyMotion, domAnimation, m as motion, useReducedMotion } from "framer-motion";
 import { capabilities, products } from "@/content";
 
 // Compact viewBox with large labels, so text stays readable when the
@@ -72,123 +72,125 @@ export function ProductGraph({ caption }: { caption: string }) {
     .join(". ");
 
   return (
-    <figure className="relative">
-      <svg
-        viewBox={`0 0 ${W} ${H}`}
-        className="h-auto w-full"
-        role="img"
-        aria-label={`${caption}. ${summary}.`}
-      >
-        <defs>
-          <linearGradient id="edge-g" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0" stopColor="var(--accent)" stopOpacity="0.7" />
-            <stop offset="1" stopColor="var(--accent-2)" stopOpacity="0.35" />
-          </linearGradient>
-        </defs>
+    <LazyMotion features={domAnimation} strict>
+      <figure className="relative">
+        <svg
+          viewBox={`0 0 ${W} ${H}`}
+          className="h-auto w-full"
+          role="img"
+          aria-label={`${caption}. ${summary}.`}
+        >
+          <defs>
+            <linearGradient id="edge-g" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0" stopColor="var(--accent)" stopOpacity="0.7" />
+              <stop offset="1" stopColor="var(--accent-2)" stopOpacity="0.35" />
+            </linearGradient>
+          </defs>
 
-        {edges.map((e, i) => (
-          <g key={e.id}>
+          {edges.map((e, i) => (
+            <g key={e.id}>
+              <motion.path
+                id={`edge-${e.id}`}
+                d={e.d}
+                fill="none"
+                stroke="url(#edge-g)"
+                strokeWidth="1.25"
+                initial={{ pathLength: reduce ? 1 : 0 }}
+                animate={{ pathLength: 1 }}
+                transition={t(0.35 + i * 0.08)}
+              />
+              {!reduce && (
+                <circle r="2.5" fill="var(--accent)">
+                  <animateMotion
+                    dur="3.2s"
+                    begin={`${1.4 + i * 0.55}s`}
+                    repeatCount="indefinite"
+                    keyPoints="0;1"
+                    keyTimes="0;1"
+                    calcMode="linear"
+                  >
+                    <mpath href={`#edge-${e.id}`} />
+                  </animateMotion>
+                </circle>
+              )}
+            </g>
+          ))}
+
+          {links.map((l, i) => (
             <motion.path
-              id={`edge-${e.id}`}
-              d={e.d}
+              key={l.id}
+              d={l.d}
               fill="none"
-              stroke="url(#edge-g)"
-              strokeWidth="1.25"
-              initial={{ pathLength: reduce ? 1 : 0 }}
-              animate={{ pathLength: 1 }}
-              transition={t(0.35 + i * 0.08)}
-            />
-            {!reduce && (
-              <circle r="2.5" fill="var(--accent)">
-                <animateMotion
-                  dur="3.2s"
-                  begin={`${1.4 + i * 0.55}s`}
-                  repeatCount="indefinite"
-                  keyPoints="0;1"
-                  keyTimes="0;1"
-                  calcMode="linear"
-                >
-                  <mpath href={`#edge-${e.id}`} />
-                </animateMotion>
-              </circle>
-            )}
-          </g>
-        ))}
-
-        {links.map((l, i) => (
-          <motion.path
-            key={l.id}
-            d={l.d}
-            fill="none"
-            stroke="var(--line-strong)"
-            strokeWidth="1.25"
-            strokeDasharray="3 4"
-            initial={{ opacity: reduce ? 1 : 0 }}
-            animate={{ opacity: 1 }}
-            transition={t(1 + i * 0.1)}
-          />
-        ))}
-
-        {capabilities.map((c, i) => (
-          <motion.g
-            key={c.id}
-            initial={{ opacity: reduce ? 1 : 0 }}
-            animate={{ opacity: 1 }}
-            transition={t(i * 0.08)}
-          >
-            <rect
-              x={CAP.x}
-              y={capY[i] - CAP.h / 2}
-              width={CAP.w}
-              height={CAP.h}
-              rx="12"
-              fill="var(--surface)"
-              stroke="var(--accent)"
-              strokeOpacity="0.45"
-            />
-            <circle cx={CAP.x + 20} cy={capY[i]} r="3.5" fill="var(--accent)" />
-            <text
-              x={CAP.x + 36}
-              y={capY[i]}
-              dominantBaseline="central"
-              fill="var(--fg)"
-              fontSize="17"
-              fontWeight="500"
-            >
-              {c.title}
-            </text>
-          </motion.g>
-        ))}
-
-        {shown.map((p, i) => (
-          <motion.g
-            key={p.id}
-            initial={{ opacity: reduce ? 1 : 0 }}
-            animate={{ opacity: 1 }}
-            transition={t(0.8 + i * 0.07)}
-          >
-            <rect
-              x={PROD.x}
-              y={prodY[i] - PROD.h / 2}
-              width={PROD.w}
-              height={PROD.h}
-              rx="10"
-              fill="var(--bg)"
               stroke="var(--line-strong)"
+              strokeWidth="1.25"
+              strokeDasharray="3 4"
+              initial={{ opacity: reduce ? 1 : 0 }}
+              animate={{ opacity: 1 }}
+              transition={t(1 + i * 0.1)}
             />
-            <text
-              x={PROD.x + 15}
-              y={prodY[i]}
-              dominantBaseline="central"
-              fill="var(--fg)"
-              fontSize="17"
+          ))}
+
+          {capabilities.map((c, i) => (
+            <motion.g
+              key={c.id}
+              initial={{ opacity: reduce ? 1 : 0 }}
+              animate={{ opacity: 1 }}
+              transition={t(i * 0.08)}
             >
-              {p.name}
-            </text>
-          </motion.g>
-        ))}
-      </svg>
-      <figcaption className="mt-4 text-sm text-muted">{caption}</figcaption>
-    </figure>
+              <rect
+                x={CAP.x}
+                y={capY[i] - CAP.h / 2}
+                width={CAP.w}
+                height={CAP.h}
+                rx="12"
+                fill="var(--surface)"
+                stroke="var(--accent)"
+                strokeOpacity="0.45"
+              />
+              <circle cx={CAP.x + 20} cy={capY[i]} r="3.5" fill="var(--accent)" />
+              <text
+                x={CAP.x + 36}
+                y={capY[i]}
+                dominantBaseline="central"
+                fill="var(--fg)"
+                fontSize="17"
+                fontWeight="500"
+              >
+                {c.title}
+              </text>
+            </motion.g>
+          ))}
+
+          {shown.map((p, i) => (
+            <motion.g
+              key={p.id}
+              initial={{ opacity: reduce ? 1 : 0 }}
+              animate={{ opacity: 1 }}
+              transition={t(0.8 + i * 0.07)}
+            >
+              <rect
+                x={PROD.x}
+                y={prodY[i] - PROD.h / 2}
+                width={PROD.w}
+                height={PROD.h}
+                rx="10"
+                fill="var(--bg)"
+                stroke="var(--line-strong)"
+              />
+              <text
+                x={PROD.x + 15}
+                y={prodY[i]}
+                dominantBaseline="central"
+                fill="var(--fg)"
+                fontSize="17"
+              >
+                {p.name}
+              </text>
+            </motion.g>
+          ))}
+        </svg>
+        <figcaption className="mt-4 text-sm text-muted">{caption}</figcaption>
+      </figure>
+    </LazyMotion>
   );
 }
