@@ -1,0 +1,185 @@
+/**
+ * All website copy lives here. Edit this file to change text on the site.
+ *
+ * Search for "TODO" to find everything that still needs a real value.
+ */
+
+export type CapabilityId = "language" | "vision" | "generative";
+
+export type Product = {
+  id: string;
+  name: string;
+  /** Short line under the product name. */
+  category: string;
+  summary: string;
+  /** Optional feature list, shown as bullets on the card. */
+  highlights?: string[];
+  /** Which AI areas the product uses. Drives the tags and the hero diagram. */
+  capabilities: CapabilityId[];
+  /** Plain-language tag for products that have no AI capability listed. */
+  tag?: string;
+  /** Another product id this one is designed to work with. */
+  worksWith?: string;
+  /** Shows the "Internal platform" badge. */
+  internal?: boolean;
+  /** Optional public link to the product. Leave undefined to hide. */
+  url?: string;
+};
+
+export type Capability = {
+  id: CapabilityId;
+  title: string;
+  description: string;
+};
+
+export const site = {
+  name: "Usaha AI",
+  domain: "usaha.ai",
+  url: "https://usaha.ai",
+  title: "Usaha AI: AI products built for real-world industry",
+  description:
+    "Usaha AI is an Indonesian startup building practical AI products for businesses and industry: customer service agents, sales outreach, computer vision for palm oil mills, and generative AI.",
+};
+
+export const nav = [
+  { label: "Products", href: "#products" },
+  { label: "How we use AI", href: "#ai" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
+
+export const hero = {
+  headline: "AI products built for real-world industry",
+  subheadline:
+    "Usaha AI builds practical AI products for businesses and industry in Indonesia, from customer service to palm oil mills.",
+  primaryCta: { label: "Explore products", href: "#products" },
+  secondaryCta: { label: "Contact us", href: "#contact" },
+  diagramCaption: "How our products connect to the AI we build with",
+};
+
+export const productsSection = {
+  title: "Products",
+  intro:
+    "Four products for customers, and two internal platforms we use to build and run them.",
+};
+
+export const products: Product[] = [
+  {
+    id: "hillow",
+    name: "Hillow",
+    category: "AI customer service",
+    summary:
+      "A multi-tenant customer service platform. AI agents help businesses reply to their customers across channels.",
+    capabilities: ["language"],
+    // TODO: add the public URL if Hillow has one, e.g. url: "https://..."
+  },
+  {
+    id: "satellyte",
+    name: "Satellyte",
+    category: "B2B lead generation for LinkedIn",
+    summary:
+      "A SaaS for sales teams. It helps them find prospects on LinkedIn and run outreach automatically.",
+    // TODO: if Satellyte uses an LLM (e.g. to write outreach messages), set
+    // capabilities: ["language"] and remove the tag below. Left empty so the
+    // site does not claim AI usage that has not been confirmed.
+    capabilities: [],
+    tag: "Sales automation",
+  },
+  {
+    id: "autograde",
+    name: "AutoGrade",
+    category: "AI fruit grading for palm oil mills",
+    summary:
+      "Computer vision checks fruit quality automatically when trucks deliver fruit to the mill.",
+    capabilities: ["vision"],
+  },
+  {
+    id: "autoerp",
+    name: "AutoERP",
+    category: "The ERP built for palm oil mills",
+    summary: "An ERP for palm oil mills, built on ERPNext.",
+    highlights: [
+      "Digital weighbridge tickets with automatic quality deductions",
+      "Purchase and stock records created from each truck visit",
+      "Mill dashboard: OER/KER, intake by source, and ISPO/RSPO certification",
+    ],
+    capabilities: [],
+    tag: "Mill operations",
+    worksWith: "autograde",
+  },
+  {
+    id: "usaha-vision",
+    name: "Usaha Vision",
+    category: "Custom vision AI, trained in-house",
+    summary:
+      "Our platform to train and deploy custom vision AI on our own servers.",
+    highlights: [
+      "AI-assisted image labeling",
+      "Model training with accuracy reports",
+      "Prediction API",
+    ],
+    capabilities: ["vision"],
+    internal: true,
+  },
+  {
+    id: "usaha-genai",
+    name: "Usaha GenAI",
+    category: "Private AI studio for images and video",
+    summary:
+      "Our private studio for generating images and short videos, available as a web app, an API, and over MCP.",
+    highlights: [
+      "Text-to-image",
+      "Image editing with reference images",
+      "Short image-to-video clips",
+    ],
+    capabilities: ["generative"],
+    internal: true,
+  },
+];
+
+export const capabilitiesSection = {
+  title: "How we use AI",
+  intro: "Three kinds of AI sit underneath everything we ship.",
+};
+
+export const capabilities: Capability[] = [
+  {
+    id: "language",
+    title: "Language AI",
+    // TODO: name the products that use Claude, e.g. "Hillow's agents run on
+    // Claude." Only Hillow is linked below until that is confirmed.
+    description:
+      "We use large language models such as Claude to power AI agents and automate text work like answering customer messages.",
+  },
+  {
+    id: "vision",
+    title: "Computer vision",
+    description:
+      "We build detection and visual grading for industry, so quality checks happen automatically from a camera image.",
+  },
+  {
+    id: "generative",
+    title: "Generative AI",
+    description:
+      "We generate images and short videos from text and reference images for creative and marketing work.",
+  },
+];
+
+export const about = {
+  title: "About",
+  paragraphs: [
+    "Usaha AI is an AI startup from Indonesia. We build practical AI products for businesses and industry, aimed at everyday work rather than demos.",
+    "Our products cover customer service, sales outreach, and palm oil mill operations. We also build our own platforms for vision AI and generative AI, so we can train, run, and improve the models behind them.",
+  ],
+  // TODO: set the year Usaha AI was founded, e.g. 2024. Hidden while null.
+  foundedYear: null as number | null,
+  location: "Indonesia", // TODO: add a city if you want, e.g. "Jakarta, Indonesia"
+};
+
+export const contact = {
+  title: "Contact",
+  intro: "Questions, partnerships, or a product demo: send us an email.",
+  // TODO: confirm this inbox exists before going live.
+  email: "hello@usaha.ai",
+  location: about.location,
+};
