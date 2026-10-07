@@ -65,4 +65,4 @@ Search `content.ts` for `TODO` to find each content spot. The last item (footer 
 - [ ] **Product links**: optionally add `url` to products that have a public site.
 - [ ] **Footer year**: it is set at build time. Redeploy once a year (any push does it).
 
-See [`NOTES.md`](./NOTES.md) for the decisions made while building the site.
+See [`NOTES.md`](./NOTES.md) for the decisions made while building the site, and [`TODO.md`](./TODO.md) for the next-day checklist (in Indonesian).
