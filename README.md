@@ -53,7 +53,7 @@ The hero diagram and the "Used in" lines are built from `content.ts`: a product 
 
 ## TODO before going live
 
-Search the code for `TODO` to find each spot. All of them are in `content.ts`.
+Search `content.ts` for `TODO` to find each content spot. The last item (footer year) is a reminder, not a code TODO.
 
 - [ ] **Contact email**: confirm `hello@usaha.ai` exists and receives mail (`contact.email`).
 - [ ] **Founded year**: set `about.foundedYear` (hidden on the site while it is `null`).
