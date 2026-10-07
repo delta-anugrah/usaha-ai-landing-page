@@ -58,7 +58,6 @@ To change the logo, replace `public/logo.png` (trimmed, transparent background) 
 
 Search `content.ts` for `TODO` to find each content spot. The last item (footer year) is a reminder, not a code TODO.
 
-- [ ] **Contact email**: confirm `hello@usaha.ai` exists and receives mail (`contact.email`).
 - [ ] **Founded year**: set `about.foundedYear` (hidden on the site while it is `null`).
 - [ ] **Claude usage**: name the products that use Claude in the Language AI description (`capabilities[0].description`).
 - [ ] **Satellyte**: if it uses an LLM, set `capabilities: ["language"]` and remove `tag`.
