@@ -1,11 +1,15 @@
 import { ImageResponse } from "next/og";
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { hero, site } from "@/content";
 
 // Served as /og.png. A route handler (instead of opengraph-image.tsx) keeps the
 // .png extension in the static export, so hosts send the right content type.
 export const dynamic = "force-static";
 
-export function GET() {
+export async function GET() {
+  const png = await readFile(join(process.cwd(), "public/logo.png"));
+  const logo = `data:image/png;base64,${png.toString("base64")}`;
   return new ImageResponse(
     (
       <div
@@ -17,18 +21,14 @@ export function GET() {
           justifyContent: "space-between",
           padding: "72px 80px",
           background:
-            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(61,219,192,0.35), rgba(8,9,11,0) 70%), #08090b",
+            "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,114,220,0.45), rgba(8,9,11,0) 70%), #08090b",
           color: "#eceef1",
           fontFamily: "sans-serif",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 34, fontWeight: 600 }}>
-          <svg width="44" height="44" viewBox="0 0 32 32">
-            <path d="M8 9 L24 9 L16 24 Z" fill="none" stroke="#3ddbc0" strokeWidth="1.6" opacity="0.6" />
-            <circle cx="8" cy="9" r="3.4" fill="#3ddbc0" />
-            <circle cx="24" cy="9" r="3.4" fill="#45b8f5" />
-            <circle cx="16" cy="24" r="3.4" fill="#45b8f5" />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse needs a plain img */}
+          <img src={logo} width={57} height={35} alt="" />
           {site.name}
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -39,7 +39,7 @@ export function GET() {
             {hero.subheadline}
           </div>
         </div>
-        <div style={{ display: "flex", fontSize: 26, color: "#3ddbc0" }}>{site.domain}</div>
+        <div style={{ display: "flex", fontSize: 26, color: "#4aa3ff" }}>{site.domain}</div>
       </div>
     ),
     { width: 1200, height: 630 },
