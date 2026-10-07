@@ -7,8 +7,8 @@
   --line-strong: rgb(255 255 255 / 0.16);
   --fg: #eceef1;
   --muted: #9aa1ab;
-  --accent: #3ddbc0;
-  --accent-2: #45b8f5;
+  --accent: #4aa3ff;
+  --accent-2: #55d0f0;
   color-scheme: dark;
 }
 
@@ -43,13 +43,12 @@ body {
 }
 
 ::selection {
-  background: rgb(61 219 192 / 0.3);
+  background: rgb(74 163 255 / 0.3);
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 6px;
 }
 
 /* Faint engineering grid, faded out toward the edges. */
@@ -61,3 +60,78 @@ body {
   mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 75%);
 }
 
+/*
+ * Ambient light behind the page. Glass only reads as glass when there is
+ * color behind it, so a few soft pools of the accent colors stay fixed
+ * behind all content. Plain gradients, no blur filter, so it is cheap.
+ */
+.ambient {
+  background:
+    radial-gradient(40rem 30rem at 12% 8%, rgb(0 114 220 / 0.24), transparent 70%),
+    radial-gradient(36rem 28rem at 88% 22%, rgb(85 208 240 / 0.14), transparent 70%),
+    radial-gradient(44rem 30rem at 70% 78%, rgb(99 102 241 / 0.1), transparent 70%),
+    radial-gradient(36rem 26rem at 8% 92%, rgb(74 163 255 / 0.1), transparent 70%);
+}
+
+/*
+ * Liquid glass surface: frosted backdrop, a faint top-to-bottom sheen, and a
+ * light rim that is brightest on the top-left edge, like light catching the
+ * edge of a glass pane.
+ */
+.glass {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.025));
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.18),
+    inset 0 -1px 0 0 rgb(255 255 255 / 0.04),
+    0 24px 48px -24px rgb(0 0 0 / 0.7);
+}
+
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    150deg,
+    rgb(255 255 255 / 0.5),
+    rgb(255 255 255 / 0.08) 30%,
+    rgb(255 255 255 / 0.04) 60%,
+    rgb(255 255 255 / 0.22)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  pointer-events: none;
+}
+
+/* Stronger version for the floating navbar once the page scrolls. */
+.glass-strong {
+  background: linear-gradient(180deg, rgb(22 25 30 / 0.72), rgb(12 14 17 / 0.6));
+}
+
+/* Accent-tinted glass for the primary button. */
+.glass-tint {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0) 55%),
+    linear-gradient(100deg, var(--accent), var(--accent-2));
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.55),
+    inset 0 -2px 6px 0 rgb(0 40 60 / 0.25),
+    0 10px 30px -10px rgb(74 163 255 / 0.6);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgb(20 22 27 / 0.92);
+  }
+}

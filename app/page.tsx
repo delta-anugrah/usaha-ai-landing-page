@@ -2,6 +2,7 @@ import { About, Contact, Footer } from "@/components/about-contact";
 import { Capabilities } from "@/components/capabilities";
 import { Hero } from "@/components/hero";
 import { Navbar } from "@/components/navbar";
+import { PalmOil } from "@/components/palm-oil";
 import { Products } from "@/components/products";
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
       <main id="main">
         <Hero />
         <Products />
+        <PalmOil />
         <Capabilities />
         <About />
         <Contact />

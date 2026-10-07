@@ -14,13 +14,13 @@ function ProductCard({ product }: { product: Product }) {
   ];
 
   return (
-    <article className="group relative flex flex-col rounded-2xl border border-line bg-surface/60 p-6 transition duration-300 hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[0_0_48px_-16px_rgb(61_219_192/0.35)] motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-7">
+    <article className="glass group flex flex-col rounded-[28px] p-6 transition duration-300 hover:-translate-y-1 hover:brightness-110 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:p-7">
       <div className="flex items-start justify-between gap-4">
-        <span className="grid size-10 place-items-center rounded-xl border border-line bg-bg text-accent">
+        <span className="glass grid size-11 place-items-center rounded-2xl text-accent">
           <Icon size={19} strokeWidth={1.75} aria-hidden />
         </span>
         {product.internal && (
-          <span className="rounded-full border border-line-strong px-2.5 py-1 text-xs text-muted">
+          <span className="glass rounded-full px-3 py-1 text-xs text-fg/80">
             Internal platform
           </span>
         )}
@@ -60,7 +60,7 @@ function ProductCard({ product }: { product: Product }) {
         {tags.map((t) => (
           <span
             key={t}
-            className="rounded-md bg-white/[0.04] px-2 py-1 text-xs text-muted ring-1 ring-inset ring-line"
+            className="rounded-full bg-white/[0.06] px-2.5 py-1 text-xs text-muted ring-1 ring-inset ring-white/10"
           >
             {t}
           </span>
@@ -77,13 +77,31 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export function Products() {
+  const customerProducts = products.filter((p) => !p.internal);
+  const internalPlatforms = products.filter((p) => p.internal);
   return (
     <Section id="products" title={productsSection.title} intro={productsSection.intro}>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {products.map((p) => (
+        {customerProducts.map((p) => (
           <ProductCard key={p.id} product={p} />
         ))}
       </div>
+
+      {internalPlatforms.length > 0 && (
+        <>
+          <h3 className="mt-16 text-lg font-semibold tracking-tight text-fg">
+            {productsSection.internalTitle}
+          </h3>
+          <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-muted">
+            {productsSection.internalIntro}
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {internalPlatforms.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </>
+      )}
     </Section>
   );
 }
