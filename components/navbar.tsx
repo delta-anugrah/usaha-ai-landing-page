@@ -8,9 +8,24 @@ import { Logo } from "./logo";
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const ids = nav.map((item) => item.href.slice(1));
+    const onScroll = () => {
+      setScrolled(window.scrollY > 8);
+      // Active section: the last one whose top has passed 35% of the viewport.
+      // At the very bottom of the page, the last section wins.
+      const line = window.innerHeight * 0.35;
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      let current: string | null = null;
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      }
+      setActive(atBottom ? ids[ids.length - 1] : current);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -42,7 +57,8 @@ export function Navbar() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="rounded-full px-3.5 py-2 text-sm text-muted transition-colors hover:bg-white/[0.06] hover:text-fg"
+                  aria-current={active === item.href.slice(1) ? "location" : undefined}
+                  className="rounded-full px-3.5 py-2 text-sm text-muted transition-colors hover:bg-white/[0.06] hover:text-fg aria-[current]:bg-white/[0.1] aria-[current]:text-fg aria-[current]:shadow-[inset_0_1px_0_rgb(255_255_255/0.18)]"
                 >
                   {item.label}
                 </a>
@@ -73,8 +89,15 @@ export function Navbar() {
                 <a
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-md py-3 text-base text-muted hover:text-fg"
+                  aria-current={active === item.href.slice(1) ? "location" : undefined}
+                  className="flex items-center gap-3 rounded-md py-3 text-base text-muted hover:text-fg aria-[current]:text-fg"
                 >
+                  <span
+                    aria-hidden
+                    className={`size-1.5 rounded-full ${
+                      active === item.href.slice(1) ? "bg-accent" : "bg-transparent"
+                    }`}
+                  />
                   {item.label}
                 </a>
               </li>
