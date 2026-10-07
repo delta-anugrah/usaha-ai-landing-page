@@ -7,10 +7,10 @@ export function Hero() {
       <div aria-hidden className="bg-grid pointer-events-none absolute inset-0" />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[-12rem] h-[36rem] w-[56rem] -translate-x-1/2 rounded-full opacity-40 blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-[-12rem] h-[36rem] w-[56rem] -translate-x-1/2 rounded-full opacity-30 blur-[120px]"
         style={{
           background:
-            "radial-gradient(closest-side, rgb(61 219 192 / 0.55), rgb(69 184 245 / 0.25), transparent)",
+            "radial-gradient(closest-side, rgb(74 163 255 / 0.55), rgb(85 208 240 / 0.25), transparent)",
         }}
       />
 
@@ -31,13 +31,13 @@ export function Hero() {
           <div className="mt-10 flex flex-wrap gap-3">
             <a
               href={hero.primaryCta.href}
-              className="inline-flex h-11 items-center rounded-full bg-gradient-to-r from-accent to-accent-2 px-6 text-sm font-semibold text-[#03120f] shadow-[0_0_32px_-8px_rgb(61_219_192/0.6)] transition-[filter,transform] hover:brightness-110 active:scale-[0.98]"
+              className="glass-tint inline-flex h-12 items-center rounded-full px-7 text-sm font-semibold text-[#04121f] transition-[filter,transform] duration-200 hover:brightness-110 active:scale-[0.97] motion-reduce:active:scale-100"
             >
               {hero.primaryCta.label}
             </a>
             <a
               href={hero.secondaryCta.href}
-              className="inline-flex h-11 items-center rounded-full border border-line-strong px-6 text-sm font-medium text-fg transition-colors hover:border-fg/40 hover:bg-white/[0.03]"
+              className="glass inline-flex h-12 items-center rounded-full px-7 text-sm font-medium text-fg transition-[filter,transform] duration-200 hover:brightness-125 active:scale-[0.97] motion-reduce:active:scale-100"
             >
               {hero.secondaryCta.label}
             </a>

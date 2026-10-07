@@ -44,7 +44,7 @@ export function Contact() {
         className="pointer-events-none absolute bottom-[-16rem] left-1/2 h-[28rem] w-[48rem] -translate-x-1/2 rounded-full opacity-25 blur-[120px]"
         style={{
           background:
-            "radial-gradient(closest-side, rgb(61 219 192 / 0.6), rgb(69 184 245 / 0.25), transparent)",
+            "radial-gradient(closest-side, rgb(74 163 255 / 0.6), rgb(85 208 240 / 0.25), transparent)",
         }}
       />
       <div className="relative mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
@@ -56,19 +56,18 @@ export function Contact() {
         </h2>
         <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">{contact.intro}</p>
 
-        <a
-          href={`mailto:${contact.email}`}
-          className="mt-10 inline-block break-all text-4xl font-semibold tracking-[-0.04em] text-fg underline decoration-line-strong decoration-1 underline-offset-[0.2em] transition-colors hover:decoration-accent sm:text-6xl"
-        >
-          {contact.email}
-        </a>
-
-        <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted">
-          <li className="flex items-center gap-2">
+        <div className="glass mt-10 rounded-[32px] p-7 sm:p-10">
+          <a
+            href={`mailto:${contact.email}`}
+            className="inline-block break-all rounded-lg text-4xl font-semibold tracking-[-0.04em] text-fg underline decoration-white/20 decoration-1 underline-offset-[0.2em] transition-colors hover:decoration-accent sm:text-6xl"
+          >
+            {contact.email}
+          </a>
+          <p className="mt-6 flex items-center gap-2 text-sm text-muted">
             <MapPin size={16} aria-hidden className="text-accent" />
             {contact.location}
-          </li>
-        </ul>
+          </p>
+        </div>
       </div>
     </section>
   );
