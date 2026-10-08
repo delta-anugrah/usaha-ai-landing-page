@@ -2,6 +2,11 @@
 # (.github/workflows/deploy-digitalocean.yml) creates or updates the app from this file.
 name: usaha-ai-landing-page
 region: sgp
+domains:
+  - domain: usaha.ai
+    type: PRIMARY
+  - domain: www.usaha.ai
+    type: ALIAS
 static_sites:
   - name: web
     git:
