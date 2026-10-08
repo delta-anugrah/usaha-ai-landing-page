@@ -5,8 +5,8 @@ Urut dari yang paling penting. Centang kalau udah.
 ## Rilis
 
 - [x] Review dan merge PR #1 ke `staging`.
-- [ ] Bikin token DigitalOcean, simpan sebagai secret `DIGITALOCEAN_ACCESS_TOKEN` di repo GitHub, lalu jalankan deploy. Langkahnya ada di `README.md`.
-- [ ] Sambungkan domain `usaha.ai` dan `www.usaha.ai` di DigitalOcean, lalu isi DNS di registrar.
+- [x] Deploy ke DigitalOcean. Live di https://usaha-ai-landing-page-j3v7a.ondigitalocean.app
+- [ ] Di Cloudflare DNS: hapus record `A` `usaha.ai` → `157.230.255.182` (server orang lain), lalu buat `CNAME` `@` dan `www` ke `usaha-ai-landing-page-j3v7a.ondigitalocean.app`, Proxy status **DNS only**.
   - Awas: jangan hapus record `MX` yang sudah ada, nanti email `support@usaha.ai` mati.
 - [ ] Pastikan `support@usaha.ai` bisa terima email (kirim email tes).
 - [ ] Setelah live: buka situsnya di HP, lalu share link-nya di WhatsApp atau LinkedIn untuk cek gambar preview.

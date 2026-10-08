@@ -54,7 +54,7 @@ Change build settings in `.do/app.yaml`, not in the DigitalOcean dashboard: the 
 
 ## Connect the usaha.ai domain
 
-1. Add the domains to `.do/app.yaml` and push:
+1. The domains are listed in `.do/app.yaml`:
 
    ```yaml
    domains:
@@ -64,7 +64,7 @@ Change build settings in `.do/app.yaml`, not in the DigitalOcean dashboard: the 
        type: ALIAS
    ```
 
-2. At your domain registrar, add the records DigitalOcean shows in the app's **Settings → Domains**:
+2. DNS for `usaha.ai` is on Cloudflare. Add the records DigitalOcean shows in the app's **Settings → Domains**, with **Proxy status: DNS only** so DigitalOcean can issue the certificate:
    - `www`: `CNAME` to the app's `ondigitalocean.app` address.
    - `usaha.ai` (apex): `CNAME`/`ALIAS` if the registrar supports flattening at the root, otherwise the `A` records App Platform lists.
 
