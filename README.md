@@ -37,22 +37,39 @@ The hero diagram and the "Used in" lines are built from `content.ts`: a product 
 
 To change the logo, replace `public/logo.png` (trimmed, transparent background) and regenerate `app/icon.png` and `app/apple-icon.png` from it.
 
-## Deploy to Vercel
+## Deploy to DigitalOcean
 
-1. Go to [vercel.com/new](https://vercel.com/new) and import `delta-anugrah/usaha-ai-landing-page` from GitHub.
-2. Framework preset: **Next.js** (detected automatically). Leave build command and output directory at their defaults. No environment variables are needed.
-3. In **Settings → Git**, set the **Production Branch**. Vercel uses `main` by default; pushes to `staging` then become preview deployments. If you want `staging` to be live, set it as the production branch, or merge `staging` into `main`.
-4. Every push redeploys automatically.
+The site is hosted as a static site on DigitalOcean App Platform (free tier, region `sgp`). Deploys run from GitHub Actions, so no DigitalOcean GitHub app has to be installed on the `delta-anugrah` org.
+
+- `.do/app.yaml` is the app spec: it clones the public repo (`staging` branch), runs `npm ci && npm run build`, and serves `out/`.
+- `.github/workflows/deploy-digitalocean.yml` runs on every push to `staging` (or by hand from the **Actions** tab). It creates the app on the first run and redeploys it after that.
+
+One-time setup:
+
+1. In DigitalOcean, open **API → Tokens → Generate New Token** with **Read** and **Write** scope.
+2. In GitHub, open the repo's **Settings → Secrets and variables → Actions → New repository secret**. Name it `DIGITALOCEAN_ACCESS_TOKEN` and paste the token.
+3. Push to `staging`, or run **Deploy to DigitalOcean** from the **Actions** tab. The live URL ends in `ondigitalocean.app` and shows up in the DigitalOcean **Apps** page.
+
+Change build settings in `.do/app.yaml`, not in the DigitalOcean dashboard: the next deploy overwrites dashboard edits with the spec. The Node version comes from `engines` in `package.json`.
 
 ## Connect the usaha.ai domain
 
-1. In the Vercel project, open **Settings → Domains** and add `usaha.ai` and `www.usaha.ai`. Choose to redirect one to the other (usually `www` → `usaha.ai`).
-2. At your domain registrar, add the DNS records Vercel shows. Typically:
-   - `A` record, name `@`, value `76.76.21.21`
-   - `CNAME` record, name `www`, value `cname.vercel-dns.com`
+1. Add the domains to `.do/app.yaml` and push:
 
-   Use the exact values from the Vercel dashboard if they differ.
-3. Wait for DNS to propagate (minutes to a few hours). Vercel issues the HTTPS certificate automatically.
+   ```yaml
+   domains:
+     - domain: usaha.ai
+       type: PRIMARY
+     - domain: www.usaha.ai
+       type: ALIAS
+   ```
+
+2. At your domain registrar, add the records DigitalOcean shows in the app's **Settings → Domains**:
+   - `www`: `CNAME` to the app's `ondigitalocean.app` address.
+   - `usaha.ai` (apex): `CNAME`/`ALIAS` if the registrar supports flattening at the root, otherwise the `A` records App Platform lists.
+
+   Do not delete the existing `MX` records, or `support@usaha.ai` stops receiving email.
+3. Wait for DNS to propagate (minutes, up to 72 hours). DigitalOcean issues the HTTPS certificate automatically.
 
 ## TODO before going live
 
