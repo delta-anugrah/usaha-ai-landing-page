@@ -10,7 +10,7 @@ Summary of the work and the decisions made while building the site without being
 - Framer Motion is used only for the hero diagram (lines draw in, nodes fade in). It loads lazily and respects "reduce motion" settings.
 - SEO: title, meta description, canonical URL, Open Graph and Twitter card, generated `/og.png` (1200×630), PNG favicon and iOS home-screen icon from the brand logo.
 - Accessibility: skip link, visible keyboard focus, labelled sections, mobile menu with `aria-expanded` and Escape to close, a text description of the hero diagram for screen readers.
-- Checks: `npm run build` and `npm run lint` pass. Lighthouse on the local build (served with gzip, like Vercel): Performance 98, Accessibility 100, Best Practices 100, SEO 100.
+- Checks: `npm run build` and `npm run lint` pass. Lighthouse on the local build (served with gzip, like the live host): Performance 98, Accessibility 100, Best Practices 100, SEO 100.
 
 ## Design decisions
 
@@ -48,4 +48,4 @@ Summary of the work and the decisions made while building the site without being
 
 ## Still to do (owner)
 
-See the TODO list in `README.md`. In short: set the founded year, name the products that use Claude, decide on Satellyte's AI tag, and set up Vercel and the domain.
+See the TODO list in `README.md`. In short: set the founded year, name the products that use Claude, decide on Satellyte's AI tag, and set up the DigitalOcean deploy and the domain.

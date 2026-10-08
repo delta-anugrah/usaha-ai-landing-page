@@ -4,9 +4,9 @@ Urut dari yang paling penting. Centang kalau udah.
 
 ## Rilis
 
-- [ ] Review dan merge PR #1 ke `staging`: https://github.com/delta-anugrah/usaha-ai-landing-page/pull/1
-- [ ] Import repo ke Vercel, lalu pilih production branch (`main` atau `staging`). Langkahnya ada di `README.md`.
-- [ ] Sambungkan domain `usaha.ai` dan `www.usaha.ai` di Vercel, lalu isi DNS di registrar.
+- [x] Review dan merge PR #1 ke `staging`.
+- [ ] Bikin token DigitalOcean, simpan sebagai secret `DIGITALOCEAN_ACCESS_TOKEN` di repo GitHub, lalu jalankan deploy. Langkahnya ada di `README.md`.
+- [ ] Sambungkan domain `usaha.ai` dan `www.usaha.ai` di DigitalOcean, lalu isi DNS di registrar.
   - Awas: jangan hapus record `MX` yang sudah ada, nanti email `support@usaha.ai` mati.
 - [ ] Pastikan `support@usaha.ai` bisa terima email (kirim email tes).
 - [ ] Setelah live: buka situsnya di HP, lalu share link-nya di WhatsApp atau LinkedIn untuk cek gambar preview.
